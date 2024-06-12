@@ -30,3 +30,12 @@ resource "equinix_network_device" "gateway_1" {
   acl_template_id    = equinix_network_acl_template.edge-acl.id
 
 }
+
+# introduce 20 mins delay during destroy so that the VGW associated with the private VIF is cleaned up and doesn't cause timeout errors with VGW deletion
+resource "time_sleep" "wait_20_mins_destroy" {
+  destroy_duration = "20m"
+}
+
+resource "null_resource" "dummy" {
+  depends_on = [time_sleep.wait_20_mins_destroy]
+}

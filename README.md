@@ -55,6 +55,28 @@ key | description
 avx_edge_1_pub_ip | Public IP of the Edge gateway
 test_vm_pub_ip | Public IP of the test VM
 
+# Testing the connectivity
+- Obtain the VM public IP from terraform output and use the pem key (ubuntu-keypair.pem ) created in the same directory.
+- SSH to the test VM
+- Ping 192.168.11.1 which is the LAN IP of the edge
+
+>ssh ubuntu@44.201.167.124 -i ubuntu-keypair.pem 
+The authenticity of host '44.201.167.124 (44.201.167.124)' can't be established.
+ED25519 key fingerprint is SHA256:av/ErueYhwpBOo0IDwL4lsxNXFeC7WmiFXNl4V9Ek/g.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '44.201.167.124' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1063-aws x86_64)
+ubuntu@ip-10-201-0-39:~$ ping 192.18.11.1
+PING 192.18.11.1 (192.18.11.1) 56(84) bytes of data.
+64 bytes from 192.18.11.1: icmp_seq=1 ttl=62 time=8.69 ms
+64 bytes from 192.18.11.1: icmp_seq=2 ttl=62 time=9.79 ms
+64 bytes from 192.18.11.1: icmp_seq=3 ttl=62 time=8.17 ms
+^C
+--- 192.18.11.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 8.167/8.881/9.792/0.677 ms
+ubuntu@ip-10-201-0-39:~$ 
 
 # Caveats
 
@@ -66,4 +88,5 @@ Equinix API is a bit unstable and can timeout like below
 │   on equinix-build/main.tf line 16, in resource "equinix_network_device" "gateway_1":
 │   16: resource "equinix_network_device" "gateway_1" {
 
-If this happens, re-run the code
+If this happens, run "terraform apply" again
+

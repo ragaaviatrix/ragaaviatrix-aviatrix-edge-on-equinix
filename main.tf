@@ -19,11 +19,6 @@ module "transit_and_spoke" {
   vgw_bgp_asn                            = var.aws_dx_bgp_asn
 }
 
-module "wait_module" {
-  source = "./aws-wait"
-  depends_on = [ module.transit_and_spoke ]
-}
-
 module "equinix_virtual_devices" {
   source                  = "./equinix-build"
   email_for_notifications = var.email_for_notifications
@@ -36,7 +31,7 @@ module "equinix_virtual_devices" {
   gateway_1               = var.region_1_edge_gateway_1
   aws_dx_bgp_asn          = var.aws_dx_bgp_asn
   bgp_md5_key             = var.aws_dx_bgp_md5_key
-  depends_on              = [module.transit_and_spoke, module.wait_module]
+  depends_on              = [module.transit_and_spoke]
 }
 
 module "aws_region_1_dx" {
@@ -58,13 +53,13 @@ module "aws_region_1_dx" {
   depends_on              = [module.equinix_virtual_devices]
 }
 
-# module "edge_transit_attachments_aws" {
-#   count           = var.enable_aws ? 1 : 0
-#   source          = "./edge-transit-attachments/aws"
-#   transit_gw_name = var.aws_transit_region_1_gateway_name
-#   edge_gw_name    = local.edge_gw_name
-#   depends_on      = [module.aws_region_1_dx]
-# }
+module "edge_transit_attachments_aws" {
+  count           = var.enable_aws ? 1 : 0
+  source          = "./edge-transit-attachments/aws"
+  transit_gw_name = var.aws_transit_region_1_gateway_name
+  edge_gw_name    = local.edge_gw_name
+  depends_on      = [module.aws_region_1_dx]
+}
 
 
 

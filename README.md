@@ -90,3 +90,11 @@ Equinix API is a bit unstable and can timeout like below
 
 If this happens, run "terraform apply" again
 
+
+
+
+
+
+
+
+

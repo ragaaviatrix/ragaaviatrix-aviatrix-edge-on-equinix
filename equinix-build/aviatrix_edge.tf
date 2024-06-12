@@ -3,7 +3,7 @@ resource "aviatrix_edge_equinix" "first_gateway" {
   account_name           = var.equinix_acc_name
   gw_name                = each.value.gw_name
   site_id                = each.value.site_id
-  ztp_file_download_path = var.file_download_path
+  ztp_file_download_path = path.module #var.file_download_path
 
   local_as_number = each.value.local_as_number
   interfaces {

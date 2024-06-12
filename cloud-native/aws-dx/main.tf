@@ -34,7 +34,7 @@ resource "equinix_fabric_connection" "aws_dx_1" {
     }
   }
   lifecycle {
-    ignore_changes = [redundancy]
+    ignore_changes = [redundancy, z_side]
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_dx_private_virtual_interface" "private_vif_1" {
   bgp_auth_key     = each.value.bgp_auth_key
   depends_on       = [aws_dx_connection_confirmation.dx_1]
   lifecycle {
-    ignore_changes = [connection_id]
+    ignore_changes = [connection_id, vlan]
   }
 }
 

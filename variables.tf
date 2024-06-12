@@ -28,13 +28,13 @@ variable "email_for_notifications" {
   type        = list(string)
 }
 
-variable "cloud_init_file_download_path" {
-  description = "Folder path to download the cloud init files"
-}
+# variable "cloud_init_file_download_path" {
+#   description = "Folder path to download the cloud init files"
+# }
 
 variable "equinix_metro_code" {
   description = "Equinix metro code eg: NY, SV etc"
-  default = "NY"
+  default     = "NY"
 }
 
 variable "equinix_account_name" {
@@ -59,20 +59,20 @@ variable "region_1_edge_gateway_1" {
     lan_ip_address  = string # IP address of the primary eth1 interface eg: "192.168.100.1/24"
   }))
   default = {
-      "gw_1" = {
-        gw_name         = "tf-test-gw1"
-        site_id         = "site-A-use1-1"
-        local_as_number = "65511"
-        wan_ip_address  = "10.11.1.2/24"
-        wan_gateway_ip  = "10.11.1.1"
-        lan_ip_address  = "192.18.11.1/24"
-      }
+    "gw_1" = {
+      gw_name         = "tf-test-gw1"
+      site_id         = "site-A-use1-1"
+      local_as_number = "65511"
+      wan_ip_address  = "10.11.1.2/24"
+      wan_gateway_ip  = "10.11.1.1"
+      lan_ip_address  = "192.18.11.1/24"
+    }
   }
 }
 
 variable "aws_dx_bgp_asn" {
   description = "BGP ASN of AWS VGW"
-  default = "65534"
+  default     = "65534"
 }
 
 variable "aws_dx_bgp_md5_key" {
@@ -91,7 +91,7 @@ variable "aws_region_1_location" {
 
 variable "aws_transit_region_1_gateway_as_number" {
   description = "AWS Region 1 Transit Gateway BGP ASN"
-  default = "64551"
+  default     = "64551"
 }
 
 variable "aws_transit_region_1_vpc_cidr" {
@@ -126,7 +126,7 @@ variable "aws_region_1_spoke_1_vpc_cidr" {
 
 variable "aws_spoke_region_1_gateway_as_number" {
   description = "AWS spoke BGP ASN"
-  default = "64552"
+  default     = "64552"
 }
 
 locals {

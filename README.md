@@ -1,18 +1,28 @@
-# Overview
 
-This code will create the following:
-- Aviatrix edge gateway on Equinix
-- L2 connection from Equinix to the CSP and auto accept the connection
-- Edge gateway as an underlay to terminate the CSP L2 connections
-- Aviatrix transit and spoke gateways in the corresponding CSP
-- Edge to transit attachment
-- A test VM deployed in the spoke VPC to test the connection to the edge LAN interface CIDR
+## Overview
 
-> Note: The initial release is only for AWS. Azure will be added later
+This code will create the following infrastructure components:
 
-# Pre-requisites
-- The controller security group must allow 0/0 CIDR from anywhere as we do not know the public IP of the edge gateway beforehand. Once the gateway is UP and attached to the transit, update the public IP under **Cloud Fabric** > **Edge** > **Gateways** > **Edit Edge Gateway** > **Interface Configuration** > **MGMT** > Update the **Egress CIDR** with the Public IP obtained from terraform output. After this, you can delete the 0/0 CIDR from the security group
-> Note: Use the x.x.x.x/32 notation for the IP  
+-   **Region**: Equinix - NY | AWS - us-east-1
+-   **Aviatrix Edge Gateway**: Deployed on Equinix.
+-   **Layer 2 (L2) Connection**: Establishes a connection from Equinix to the CSP (Cloud Service Provider) and auto-accepts the connection.
+-   **Edge Gateway Underlay**: Terminates the CSP L2 connections.
+-   **Aviatrix Transit and Spoke Gateways**: Deployed in the corresponding CSP.
+-   **Edge to Transit Attachment**: Connects the edge to the transit.
+-   **Test VM**: Deployed in the spoke VPC to test the connection to the edge LAN interface CIDR.
+
+> **Note**: The initial release is only for AWS. Azure support will be added in the future.
+
+## Pre-requisites
+
+-   The **controller security group** must allow `0.0.0.0/0` CIDR for TCP port 443 from anywhere, as the public IP of the edge gateway is unknown beforehand. After the gateway is UP and attached to the transit, follow these steps to update the security settings:
+    
+    1.  Navigate to **Cloud Fabric** > **Edge** > **Gateways** > **Edit Edge Gateway** > **Interface Configuration** > **MGMT**.
+    2.  Update the **Egress CIDR** with the Public IP obtained from the Terraform output.
+-   Once the public IP is updated, remove the `0.0.0.0/0` CIDR from the security group.
+    
+
+> **Note**: Use the `x.x.x.x/32` notation for specifying the IP address.
 
 - Equinix API
 >See the [Developer Platform](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview) page on how to generate Client ID and Client Secret.
@@ -24,7 +34,26 @@ This code will create the following:
 ### Variables
 The following variables are required:
 
+key | value
+:--- | :---
+controller_ip | Aviatrix controller IP
+copilot_ip | Aviatrix copilot IP
+controller_password | Controller password
+equinix_client_id | Obtained from the Equinix developer portal
+equinix_client_secret | Obtained from the Equinix developer portal
+email_for_notifications | eg: ["hello@avx.com"]
+equinix_account_name | Equinix account name onboarded on the controller
+equinix_account_number | Equinix account number
+aws_dx_bgp_md5_key | BGP auth string
+aws_cloud_account | AWS account name onboarded on the controller
 
+### Outputs
+This module will return the following outputs:
+
+key | description
+:---|:---
+avx_edge_1_pub_ip | Public IP of the Edge gateway
+test_vm_pub_ip | Public IP of the test VM
 
 
 # Caveats

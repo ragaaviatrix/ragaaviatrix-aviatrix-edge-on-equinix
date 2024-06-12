@@ -1,6 +1,6 @@
 
 data "local_file" "first_gw" {
-  filename   = "${var.file_download_path}/${local.gw_1_name}-${local.gw_1_site_id}-cloud-init.txt"
+  filename   = "${path.module}/${local.gw_1_name}-${local.gw_1_site_id}-cloud-init.txt"
   depends_on = [aviatrix_edge_equinix.first_gateway]
 }
 

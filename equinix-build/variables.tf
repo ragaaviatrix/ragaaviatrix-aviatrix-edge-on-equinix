@@ -27,9 +27,9 @@ variable "equinix_acc_number" {
 
 }
 
-variable "file_download_path" {
+# variable "file_download_path" {
 
-}
+# }
 
 variable "aws_dx_bgp_asn" {
 

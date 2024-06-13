@@ -28,10 +28,6 @@ variable "email_for_notifications" {
   type        = list(string)
 }
 
-# variable "cloud_init_file_download_path" {
-#   description = "Folder path to download the cloud init files"
-# }
-
 variable "equinix_metro_code" {
   description = "Equinix metro code eg: NY, SV etc"
   default     = "NY"

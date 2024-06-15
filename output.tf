@@ -3,5 +3,5 @@ output "avx_edge_1_pub_ip" {
 }
 
 output "test_vm_pub_ip" {
-  value = module.transit_and_spoke[0].vm_public_ip
+  value = module.transit_and_spoke_aws[0].vm_public_ip
 }

@@ -45,7 +45,7 @@ variable "enable_aws" {
   default = true
 }
 
-variable "region_1_edge_gateway_1" {
+variable "edge_gateway_1" {
   type = map(object({
     gw_name         = string # name of the edge gateway
     site_id         = string # ID of the site, eg: use-site-A
@@ -56,7 +56,7 @@ variable "region_1_edge_gateway_1" {
   }))
   default = {
     "gw_1" = {
-      gw_name         = "tf-test-gw1"
+      gw_name         = "avx-edge-gw-"
       site_id         = "site-A-use1-1"
       local_as_number = "65511"
       wan_ip_address  = "10.11.1.2/24"
@@ -80,62 +80,49 @@ variable "aws_cloud_account" {
 }
 
 
-variable "aws_region_1_location" {
-  description = "AWS region 1 location"
+variable "aws_location" {
+  description = "AWS region location"
   default     = "us-east-1"
 }
 
-variable "aws_transit_region_1_gateway_as_number" {
-  description = "AWS Region 1 Transit Gateway BGP ASN"
+variable "aws_transit_gateway_as_number" {
+  description = "Transit Gateway BGP ASN for AWS"
   default     = "64551"
 }
 
-variable "aws_transit_region_1_vpc_cidr" {
-  description = "VPC cidr for AWS region 1"
+variable "aws_transit_vpc_cidr" {
+  description = "VPC CIDR for AWS transit"
   default     = "10.4.0.0/22"
 }
 
-variable "aws_transit_region_1_vpc_name" {
-  description = "VPC name for AWS region 1"
+variable "aws_transit_vpc_name" {
+  description = "VPC name for AWS transit"
   default     = "transit-vpc-awsuse-1"
 }
 
-variable "aws_transit_region_1_gateway_name" {
-  description = "Gateway name for AWS region 1"
+variable "aws_transit_gateway_name" {
+  description = "Gateway name for AWS transit"
   default     = "transit-aws-east1"
 }
 
-variable "aws_region_1_spoke_1_gateway_name" {
-  description = "AWS spoke 1 region 1 gateway name"
+variable "aws_spoke_gateway_name" {
+  description = "AWS spoke gateway name"
   default     = "spoke-aws-east1"
 }
 
-variable "aws_region_1_spoke_1_region_location" {
-  description = "AWS spoke 1 region 1 location"
+variable "aws_spoke_region_location" {
+  description = "AWS spoke region location"
   default     = "us-east-1"
 }
 
-variable "aws_region_1_spoke_1_vpc_cidr" {
-  description = "AWS spoke 1 CIDR"
+variable "aws_spoke_vpc_cidr" {
+  description = "AWS spoke VPC CIDR"
   default     = "10.201.0.0/24"
 }
 
-variable "aws_spoke_region_1_gateway_as_number" {
+variable "aws_spoke_gateway_as_number" {
   description = "AWS spoke BGP ASN"
   default     = "64552"
-}
-
-locals {
-  edge_gw_name = values(var.region_1_edge_gateway_1)[0].gw_name
-  priv_vif_1 = {
-    "vif_1" = {
-      name             = "vif_1_to_edge_1"
-      bgp_asn          = values(var.region_1_edge_gateway_1)[0].local_as_number # edge gateway ASN
-      amazon_address   = "10.11.1.1/24"
-      customer_address = "10.11.1.2/24"
-      bgp_auth_key     = var.aws_dx_bgp_md5_key
-    },
-  }
 }
 
 

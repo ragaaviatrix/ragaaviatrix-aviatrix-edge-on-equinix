@@ -3,10 +3,6 @@ variable "email_for_notifications" {
 
 }
 
-variable "aws_region" {
-
-}
-
 variable "metro_code" {
 
 }
@@ -27,15 +23,11 @@ variable "equinix_acc_number" {
 
 }
 
-# variable "file_download_path" {
-
-# }
-
-variable "aws_dx_bgp_asn" {
+variable "bgp_md5_key" {
 
 }
 
-variable "bgp_md5_key" {
+variable "random_value" {
 
 }
 
@@ -51,7 +43,7 @@ variable "gateway_1" {
 }
 
 locals {
-  gw_1_name    = values(var.gateway_1)[0].gw_name
+  gw_1_name    = format("%s%d", values(var.gateway_1)[0].gw_name, var.random_value) # create a unique gateway name as multiple people can deploy in the same Equinix account
   gw_1_site_id = values(var.gateway_1)[0].site_id
   gw_1_bgp_asn = values(var.gateway_1)[0].local_as_number
 }

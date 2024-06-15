@@ -3,12 +3,12 @@ module "aws_transit" {
   version = "2.5.2"
 
   cloud           = var.cloud_type_aws
-  region          = var.aws_region_1_location
-  cidr            = var.aws_transit_region_1_vpc_cidr
+  region          = var.aws_location
+  cidr            = var.aws_transit_vpc_cidr
   account         = var.aws_cloud_account
-  name            = var.aws_transit_region_1_vpc_name
-  gw_name         = var.aws_transit_region_1_gateway_name
-  local_as_number = var.aws_transit_region_1_gateway_as_number
+  name            = var.aws_transit_vpc_name
+  gw_name         = var.aws_transit_gateway_name
+  local_as_number = var.aws_transit_gateway_as_number
   ha_gw           = false
 }
 
@@ -17,12 +17,12 @@ module "aws_spoke" {
   version = "1.6.8"
 
   cloud           = var.cloud_type_aws
-  name            = var.aws_region_1_spoke_1_gateway_name
-  cidr            = var.aws_region_1_spoke_1_vpc_cidr
-  region          = var.aws_region_1_spoke_1_region_location
+  name            = var.aws_spoke_gateway_name
+  cidr            = var.aws_spoke_vpc_cidr
+  region          = var.aws_spoke_region_location
   account         = var.aws_cloud_account
-  transit_gw      = var.aws_transit_region_1_gateway_name
-  local_as_number = var.aws_spoke_region_1_gateway_as_number
+  transit_gw      = var.aws_transit_gateway_name
+  local_as_number = var.aws_spoke_gateway_as_number
   attached        = true
   enable_bgp      = true
   depends_on      = [module.aws_transit]

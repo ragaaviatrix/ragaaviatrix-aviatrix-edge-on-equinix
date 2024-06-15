@@ -26,3 +26,5 @@ provider "aviatrix" {
   username      = var.controller_username
   password      = var.controller_password
 }
+
+provider "random" {}

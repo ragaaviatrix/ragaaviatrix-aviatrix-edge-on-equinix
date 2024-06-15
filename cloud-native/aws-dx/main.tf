@@ -69,6 +69,11 @@ resource "aws_dx_private_virtual_interface" "private_vif_1" {
   lifecycle {
     ignore_changes = [connection_id, vlan]
   }
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
 }
 
 # Create a DX connection to AWS DX (WAN underlay)
